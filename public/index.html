@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>掌上桌球馆</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <h1>掌上桌球馆</h1>
+      <p class="subtitle">随时随地畅玩真实的台球体验</p>
+    </header>
+
+    <main id="scene-container">
+      <section id="menu-screen" class="screen active">
+        <div class="card">
+          <h2>选择模式</h2>
+          <button id="single-player-btn" class="primary">单人练习</button>
+          <button id="multiplayer-btn" class="secondary">多人对战</button>
+        </div>
+      </section>
+
+      <section id="singleplayer-screen" class="screen">
+        <div class="toolbar">
+          <button class="back-btn" data-target="menu-screen">返回</button>
+          <div class="status-text">
+            <span>练习模式</span>
+            <span id="single-score">已进球: 0</span>
+          </div>
+        </div>
+        <canvas id="single-canvas"></canvas>
+        <div class="controls">
+          <div class="hint">按住并拖拽控制杆，松手击球</div>
+          <div class="buttons">
+            <button id="reset-single" class="secondary">重新摆球</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="multiplayer-lobby" class="screen">
+        <div class="toolbar">
+          <button class="back-btn" data-target="menu-screen">返回</button>
+          <div class="status-text">
+            <span>实时对战</span>
+            <span id="connection-status" class="status-badge">未连接</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tab-bar">
+            <button class="tab-button active" data-tab="create">创建房间</button>
+            <button class="tab-button" data-tab="join">加入房间</button>
+          </div>
+          <div class="tab-content active" data-tab-content="create">
+            <label class="field">
+              <span>您的昵称</span>
+              <input id="create-name" type="text" placeholder="输入昵称" maxlength="12" />
+            </label>
+            <button id="create-room" class="primary">一键创建房间</button>
+            <div id="created-room-info" class="room-info hidden"></div>
+          </div>
+          <div class="tab-content" data-tab-content="join">
+            <label class="field">
+              <span>您的昵称</span>
+              <input id="join-name" type="text" placeholder="输入昵称" maxlength="12" />
+            </label>
+            <label class="field">
+              <span>房间号</span>
+              <input id="join-room-id" type="text" placeholder="例如 A1B2" maxlength="6" />
+            </label>
+            <button id="join-room" class="primary">加入房间</button>
+            <div id="join-error" class="error-message hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="multiplayer-game" class="screen">
+        <div class="toolbar">
+          <button class="back-btn" data-target="multiplayer-lobby">退出</button>
+          <div class="status-text">
+            <span id="room-label">房间号</span>
+            <span id="turn-indicator" class="status-badge">等待对手...</span>
+          </div>
+        </div>
+        <div class="scoreboard">
+          <div class="player" id="player-one">
+            <span class="name">玩家 1</span>
+            <span class="balls">0 球</span>
+          </div>
+          <div class="player" id="player-two">
+            <span class="name">玩家 2</span>
+            <span class="balls">0 球</span>
+          </div>
+        </div>
+        <canvas id="multi-canvas"></canvas>
+        <div class="controls">
+          <div class="hint" id="multi-hint">等待对手进入房间...</div>
+          <div class="buttons">
+            <button id="multi-restart" class="secondary" disabled>重新开局</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>提示：请横屏体验以获得最佳观感，拖动可调整击球角度，长按蓄力。</p>
+    </footer>
+  </div>
+  <script src="js/network.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
